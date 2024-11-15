@@ -63,7 +63,8 @@ jTextField5.getDocument().addDocumentListener(new javax.swing.event.DocumentList
                     rs.getString("nama_barang"),
                     rs.getString("kategori"),
                     rs.getString("merek"),
-                    rs.getString("ukuran")
+                    rs.getString("ukuran"),
+                    rs.getString("nama_lokasi")
                 };
                 model.addRow(row);
             }
@@ -106,6 +107,8 @@ jTextField5.getDocument().addDocumentListener(new javax.swing.event.DocumentList
         jButton6 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
+        jTextField6 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Data Barang");
@@ -170,13 +173,13 @@ jTextField5.getDocument().addDocumentListener(new javax.swing.event.DocumentList
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Kode Barang", "Nama Barang", "Kategori", "Merek", "Ukuran"
+                "Kode Barang", "Nama Barang", "Kategori", "Merek", "Ukuran", "Lokasi"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -215,6 +218,8 @@ jTextField5.getDocument().addDocumentListener(new javax.swing.event.DocumentList
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
+        jLabel7.setText("Lokasi");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -240,19 +245,20 @@ jTextField5.getDocument().addDocumentListener(new javax.swing.event.DocumentList
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(18, 18, 18)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                                        .addComponent(jTextField2))
-                                    .addGap(71, 71, 71)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField4)
-                                        .addComponent(jTextField3)))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                                    .addComponent(jTextField2))
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(71, 71, 71)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextField4)
+                                .addComponent(jTextField3)
+                                .addComponent(jTextField6)))
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
@@ -280,7 +286,9 @@ jTextField5.getDocument().addDocumentListener(new javax.swing.event.DocumentList
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
@@ -315,15 +323,18 @@ jTextField5.getDocument().addDocumentListener(new javax.swing.event.DocumentList
         String kategori = jComboBox1.getSelectedItem().toString();
         String merek = jTextField3.getText();
         String ukuran = jTextField4.getText();
+        String namaLokasi = jTextField6.getText();
 
         try (Connection conn = koneksiDB()) {
-            String query = "INSERT INTO barang (kode_barang, nama_barang, kategori, merek, ukuran) VALUES (?, ?, ?, ?, ?)";
+            String query = "INSERT INTO barang (kode_barang, nama_barang, kategori, merek, ukuran, nama_lokasi) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, kodeBarang);
             ps.setString(2, namaBarang);
             ps.setString(3, kategori);
             ps.setString(4, merek);
             ps.setString(5, ukuran);
+            ps.setString(6, namaLokasi);
+            
 
             ps.executeUpdate();
             JOptionPane.showMessageDialog(this, "Data berhasil disimpan!");
@@ -347,15 +358,17 @@ jTextField5.getDocument().addDocumentListener(new javax.swing.event.DocumentList
         String kategori = jComboBox1.getSelectedItem().toString();
         String merek = jTextField3.getText();
         String ukuran = jTextField4.getText();
+        String namaLokasi = jTextField6.getText();
 
         try (Connection conn = koneksiDB()) {
-            String query = "UPDATE barang SET nama_barang = ?, kategori = ?, merek = ?, ukuran = ? WHERE kode_barang = ?";
+            String query = "UPDATE barang SET nama_barang = ?, kategori = ?, merek = ?, ukuran = ?, nama_lokasi = ? WHERE kode_barang = ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, namaBarang);
             ps.setString(2, kategori);
             ps.setString(3, merek);
             ps.setString(4, ukuran);
-            ps.setString(5, kodeBarang);
+            ps.setString(5, namaLokasi);
+            ps.setString(6, kodeBarang);
 
             int rowsUpdated = ps.executeUpdate();
             if (rowsUpdated > 0) {
@@ -427,7 +440,8 @@ jTextField5.getDocument().addDocumentListener(new javax.swing.event.DocumentList
                     rs.getString("nama_barang"),
                     rs.getString("kategori"),
                     rs.getString("merek"),
-                    rs.getString("ukuran")
+                    rs.getString("ukuran"),
+                    rs.getString("nama_lokasi")
                 };
                 model.addRow(row);
             }
@@ -446,6 +460,7 @@ jTextField5.getDocument().addDocumentListener(new javax.swing.event.DocumentList
             jComboBox1.setSelectedItem(jTable1.getValueAt(selectedRow, 2).toString());
             jTextField3.setText(jTable1.getValueAt(selectedRow, 3).toString());
             jTextField4.setText(jTable1.getValueAt(selectedRow, 4).toString());
+            jTextField6.setText(jTable1.getValueAt(selectedRow, 5).toString());
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -498,6 +513,7 @@ jTextField5.getDocument().addDocumentListener(new javax.swing.event.DocumentList
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -507,6 +523,7 @@ jTextField5.getDocument().addDocumentListener(new javax.swing.event.DocumentList
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 
 
@@ -517,6 +534,7 @@ jTextField5.getDocument().addDocumentListener(new javax.swing.event.DocumentList
         jComboBox1.setSelectedIndex(0);
         jTextField3.setText("");
         jTextField4.setText("");
+        jTextField6.setText("");
     }
 
 
@@ -535,7 +553,8 @@ jTextField5.getDocument().addDocumentListener(new javax.swing.event.DocumentList
                     rs.getString("nama_barang"),
                     rs.getString("kategori"),
                     rs.getString("merek"),
-                    rs.getString("ukuran")
+                    rs.getString("ukuran"),
+                    rs.getString("nama_lokasi")
                 };
                 model.addRow(row);
             }
